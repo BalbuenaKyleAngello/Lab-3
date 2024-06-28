@@ -2,23 +2,39 @@
 
 class Student:
     def __init__(self, name):
-        self.name = name
+        self._name = name
+
+    @property
+    def name(self):
+        return self._name
+
+    def __repr__(self):
+        return f"Student('{self.name}')"
+
+    def __str__(self):
+        return self.name
+
+    def __hash__(self):
+        return hash(self.name)
 
     def __eq__(self, other):
-        """Test for equality"""
+        if not isinstance(other, Student):
+            return False
         return self.name == other.name
 
     def __lt__(self, other):
-        """Test for less than"""
+        if not isinstance(other, Student):
+            raise TypeError("Cannot compare Student to non-Student")
         return self.name < other.name
 
     def __ge__(self, other):
-        """Test for greater than or equal to"""
+        if not isinstance(other, Student):
+            raise TypeError("Cannot compare Student to non-Student")
         return self.name >= other.name
 
 def main():
     student1 = Student("Alice")
-    student2 = Student("Alice")
+    student2 = Student("Bob")
     student3 = Student("Alice")
 
     print("Equality test:")
